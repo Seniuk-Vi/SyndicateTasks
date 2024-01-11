@@ -14,13 +14,16 @@ import com.syndicate.deployment.model.lambda.url.InvokeMode;
         roleName = "task02-role",
         isPublishVersion = true)
 @LambdaUrlConfig(
-        authType = AuthType.AWS_IAM,
+        authType = AuthType.NONE,
         invokeMode = InvokeMode.BUFFERED
 )
 public class HelloWorld implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent event, Context context) {
         System.out.printf("Event: %s\n", event);
+        System.out.printf("Context: %s\n", context);
+        System.out.printf("Path: %s\n", event.getPath());
+        System.out.printf("HttpMethod: %s\n", event.getHttpMethod());
         if ("/hello".equals(event.getPath()) && "GET".equals(event.getHttpMethod())) {
             // Process the GET request
             APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
