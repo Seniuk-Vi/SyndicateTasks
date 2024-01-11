@@ -24,7 +24,7 @@
     },
     "resource_type": "iam_policy"
   },
-  "task01-role": {
+  "task02-role": {
     "predefined_policies": [],
     "principal_service": "lambda",
     "custom_policies": [
@@ -34,5 +34,24 @@
     "allowed_accounts": [
       "${account_id}"
     ]
+  },
+  "syndicate-demo-api": {
+    "deploy_stage": "api",
+    "resources": {
+      "/hello": {
+        "enable_cors": true,
+        "GET": {
+          "integration_request_body_template": {},
+          "integration_type": "lambda",
+          "authorization_type": "NONE",
+          "method_request_parameters": {},
+          "enable_proxy": true,
+          "default_error_pattern": true,
+          "integration_passthrough_behavior": "WHEN_NO_TEMPLATES",
+          "lambda_name": "hello_world"
+        }
+      }
+    },
+    "resource_type": "api_gateway"
   }
 }
