@@ -26,14 +26,15 @@ public class HelloWorld implements RequestHandler<APIGatewayProxyRequestEvent, A
         System.out.printf("HttpMethod: %s\n", event.getHttpMethod());
         if ("/hello".equals(event.getPath()) && "GET".equals(event.getHttpMethod())) {
             // Process the GET request
-            APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
-            response.setStatusCode(200);
-            response.setBody("{\n" +
-                    "    \"statusCode\": 200,\n" +
-                    "    \"message\": \"Hello from Lambda\"\n" +
-                    "}");
-            return response;
+
         }
-        return null; // or handle other paths and HTTP methods as necessary
+        APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
+        response.setStatusCode(200);
+        response.setBody("{\n" +
+                "    \"statusCode\": 200,\n" +
+                "    \"message\": \"Hello from Lambda\"\n" +
+                "}");
+        return response;
+//        return null; // or handle other paths and HTTP methods as necessary
     }
 }
