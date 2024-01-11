@@ -26,6 +26,7 @@ public class HelloWorld implements RequestHandler<APIGatewayProxyRequestEvent, A
         System.out.printf("HttpMethod: %s\n", event.getHttpMethod());
         if ("/hello".equals(event.getPath()) && "GET".equals(event.getHttpMethod())) {
             // Process the GET request
+            System.out.printf("Hello World");
 
         }
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
