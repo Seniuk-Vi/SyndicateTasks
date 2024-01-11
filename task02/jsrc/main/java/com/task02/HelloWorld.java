@@ -20,7 +20,7 @@ import com.syndicate.deployment.model.lambda.url.InvokeMode;
 public class HelloWorld implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent event, Context context) {
-        System.out.printf("Event: %s\n", event);
+        System.out.printf("Event1: %s\n", event);
         System.out.printf("Context: %s\n", context);
         System.out.printf("Path: %s\n", event.getPath());
         System.out.printf("HttpMethod: %s\n", event.getHttpMethod());
