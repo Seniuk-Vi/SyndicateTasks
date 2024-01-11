@@ -1,2 +1,4 @@
 .syndicate
+.syndicate-config-aws-sandbox/
 logs/
+target/
