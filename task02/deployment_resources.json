@@ -35,7 +35,7 @@
       "${account_id}"
     ]
   },
-  "syndicate-demo-api": {
+  "syndicate-demo-api2": {
     "deploy_stage": "api",
     "resources": {
       "/hello": {
