@@ -12,9 +12,7 @@ import com.syndicate.deployment.model.lambda.url.InvokeMode;
 @LambdaHandler(
         lambdaName = "hello_world",
         roleName = "task02-role",
-        isPublishVersion = true,
-        aliasName = "${lambdas_alias_name}"
-)
+        isPublishVersion = true)
 @LambdaUrlConfig(
         authType = AuthType.AWS_IAM,
         invokeMode = InvokeMode.BUFFERED
