@@ -24,8 +24,8 @@
     },
     "resource_type": "iam_policy"
   },
-  "task03-role": {
-    "predefined_policies": [],
+  "task04-role": {
+    "predefined_policies": [ ],
     "principal_service": "lambda",
     "custom_policies": [
       "lambda-basic-execution"
@@ -35,31 +35,32 @@
       "${account_id}"
     ]
   },
-  "task3_api": {
-    "resource_type": "api_gateway",
-    "deploy_stage": "api",
-    "dependencies": [
-      {
-        "resource_name": "hello_world",
-        "resource_type": "lambda"
-      }
+  "sqs_handler-role": {
+    "predefined_policies": [  ],
+    "principal_service": "lambda",
+    "custom_policies": [
+      "lambda-basic-execution"
     ],
-    "resources": {
-      "/hello": {
-        "enable_cors": false,
-        "GET": {
-          "authorization_type": "NONE",
-          "integration_type": "lambda",
-          "lambda_name": "hello_world",
-          "api_key_required": false,
-          "method_request_parameters": {},
-          "integration_request_body_template": {},
-          "responses": [],
-          "enable_proxy": true,
-          "integration_responses": [],
-          "default_error_pattern": true
-        }
-      }
-    }
+    "resource_type": "iam_role",
+    "allowed_accounts": [
+      "${account_id}"
+    ]
+  },
+  "async_queue": {
+    "resource_type": "sqs_queue",
+    "fifo_queue": false,
+    "visibility_timeout": 300,
+    "delay_seconds": 0,
+    "maximum_message_size": 1024,
+    "message_retention_period": 60,
+    "receive_message_wait_time_seconds": 0,
+    "policy": {},
+    "redrive_policy": {},
+    "content_based_deduplication": false
+  },
+  "lambda_topic": {
+    "resource_type": "sns_topic",
+    "region": "eu-central-1",
+    "event_sources": []
   }
 }
