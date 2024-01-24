@@ -14,7 +14,10 @@
             "dynamodb:DeleteItem",
             "ssm:PutParameter",
             "ssm:GetParameter",
-            "kms:Decrypt"
+            "kms:Decrypt",
+            "sqs:ReceiveMessage",
+            "sqs:DeleteMessage",
+            "sqs:GetQueueAttributes"
           ],
           "Effect": "Allow",
           "Resource": "*"
@@ -25,7 +28,7 @@
     "resource_type": "iam_policy"
   },
   "task04-role": {
-    "predefined_policies": [ ],
+    "predefined_policies": [ "AWSLambda_FullAccess"],
     "principal_service": "lambda",
     "custom_policies": [
       "lambda-basic-execution"
@@ -36,7 +39,7 @@
     ]
   },
   "sqs_handler-role": {
-    "predefined_policies": [  ],
+    "predefined_policies": [ "AWSLambda_FullAccess" ],
     "principal_service": "lambda",
     "custom_policies": [
       "lambda-basic-execution"
