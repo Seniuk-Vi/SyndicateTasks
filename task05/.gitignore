@@ -1,4 +1,5 @@
 .syndicate
 logs/
 /.syndicate-config-aws-sandbox/
+
 /target/
