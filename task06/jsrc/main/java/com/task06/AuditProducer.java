@@ -13,6 +13,8 @@ import com.task06.model.NewAudit;
 import com.task06.model.UpdateAudit;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,23 +43,26 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Void> {
             }
             // check if the record is an INSERT or UPDATE
             Configuration configuration = parseConfiguration(record);
+
             if (record.getEventName().equals("INSERT")) {
                 System.out.println("INSERT");
+                Instant instant = Instant.ofEpochMilli(record.getDynamodb().getApproximateCreationDateTime().getTime());
+                ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("Z"));
                 NewAudit newAudit = NewAudit.builder()
                         .id(UUID.randomUUID().toString())
                         .itemKey(configuration.getKey())
-                        .modificationTime(formatter.format(
-                                        Instant.ofEpochMilli(record.getDynamodb().getApproximateCreationDateTime().getTime())))
+                        .modificationTime(formatter.format(zonedDateTime))
                         .newValue(configuration)
                         .build();
                 publishAudit(newAudit);
             } else if (record.getEventName().equals("MODIFY")) {
                 System.out.println("MODIFY");
+                Instant instant = Instant.ofEpochMilli(record.getDynamodb().getApproximateCreationDateTime().getTime());
+                ZonedDateTime zonedDateTime = instant.atZone(ZoneId.of("Z"));
                 UpdateAudit updateAudit = UpdateAudit.builder()
                         .id(UUID.randomUUID().toString())
                         .itemKey(configuration.getKey())
-                        .modificationTime(formatter.format(
-                                Instant.ofEpochMilli(record.getDynamodb().getApproximateCreationDateTime().getTime())))
+                        .modificationTime(formatter.format(zonedDateTime))
                         .updatedAttribute("value")
                         .oldValue(record.getDynamodb().getOldImage().get("value").getS())
                         .newValue(record.getDynamodb().getNewImage().get("value").getS())
