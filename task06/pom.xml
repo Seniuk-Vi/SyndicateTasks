@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>task05-group</groupId>
-    <artifactId>task05</artifactId>
+    <groupId>task06-group</groupId>
+    <artifactId>task06</artifactId>
     <version>1.0.0</version>
 
     <properties>
@@ -24,7 +24,7 @@
             <artifactId>aws-lambda-java-core</artifactId>
             <version>1.2.0</version>
         </dependency>
-        <!--events-->
+        <!-- Events-->
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-lambda-java-events</artifactId>
@@ -35,6 +35,13 @@
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-dynamodb</artifactId>
             <version>1.11.246</version>
+        </dependency>
+        <!--lombok-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.30</version>
+            <scope>provided</scope>
         </dependency>
         <!--Syndicate annotations-->
         <dependency>
@@ -53,7 +60,7 @@
                 <version>${deployment-configuration-annotations.version}</version>
                 <configuration>
                     <packages>
-                        <package>com.task05</package>
+                        <package>com.task06</package>
                     </packages>
                     <fileName>${project.name}-${project.version}.jar</fileName>
                 </configuration>
