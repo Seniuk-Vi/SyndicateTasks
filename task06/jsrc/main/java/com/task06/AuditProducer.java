@@ -24,6 +24,7 @@ import java.util.UUID;
 @DynamoDbTriggerEventSource(targetTable = "Configuration", batchSize = 1)
 public class AuditProducer implements RequestHandler<DynamodbEvent, Void> {
     private final AmazonDynamoDB dynamoDb;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
     public AuditProducer() {
         this.dynamoDb = AmazonDynamoDBClient.builder()
@@ -45,8 +46,8 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Void> {
                 NewAudit newAudit = NewAudit.builder()
                         .id(UUID.randomUUID().toString())
                         .itemKey(configuration.getKey())
-                        .modificationTime(DateTimeFormatter.ISO_INSTANT.format(
-                                Instant.ofEpochMilli(record.getDynamodb().getApproximateCreationDateTime().getTime())))
+                        .modificationTime(formatter.format(
+                                        Instant.ofEpochMilli(record.getDynamodb().getApproximateCreationDateTime().getTime())))
                         .newValue(configuration)
                         .build();
                 publishAudit(newAudit);
@@ -55,7 +56,7 @@ public class AuditProducer implements RequestHandler<DynamodbEvent, Void> {
                 UpdateAudit updateAudit = UpdateAudit.builder()
                         .id(UUID.randomUUID().toString())
                         .itemKey(configuration.getKey())
-                        .modificationTime(DateTimeFormatter.ISO_INSTANT.format(
+                        .modificationTime(formatter.format(
                                 Instant.ofEpochMilli(record.getDynamodb().getApproximateCreationDateTime().getTime())))
                         .updatedAttribute("value")
                         .oldValue(record.getDynamodb().getOldImage().get("value").getS())
