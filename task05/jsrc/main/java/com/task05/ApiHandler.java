@@ -30,7 +30,6 @@ import java.util.UUID;
 @LambdaHandler(lambdaName = "api_handler",
         roleName = "task05-role"
 )
-@DependsOn(name = "cmtr-6d93d07b-Events-test", resourceType = ResourceType.DYNAMODB_TABLE)
 @LambdaUrlConfig(
         authType = AuthType.NONE,
         invokeMode = InvokeMode.BUFFERED
