@@ -30,7 +30,7 @@ import java.util.UUID;
 @LambdaHandler(lambdaName = "api_handler",
         roleName = "task05-role"
 )
-@DependsOn(name = "Events", resourceType = ResourceType.DYNAMODB_TABLE)
+@DependsOn(name = "cmtr-6d93d07b-Events-test", resourceType = ResourceType.DYNAMODB_TABLE)
 @LambdaUrlConfig(
         authType = AuthType.NONE,
         invokeMode = InvokeMode.BUFFERED
@@ -54,7 +54,7 @@ public class ApiHandler implements RequestHandler<APIGatewayProxyRequestEvent, A
             ApiRequest request = parseRequest(event.getBody());
             ApiResponse response = generateApiResponse(request);
             // save to dynamo db
-            PutItemRequest putItemRequest = new PutItemRequest("Events", toDynamoDBItem(response));
+            PutItemRequest putItemRequest = new PutItemRequest("cmtr-6d93d07b-Events-test", toDynamoDBItem(response));
             dynamoDB.putItem(putItemRequest);
             // return response
             APIGatewayProxyResponseEvent responseEvent = new APIGatewayProxyResponseEvent();
