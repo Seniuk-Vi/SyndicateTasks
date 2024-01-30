@@ -11,13 +11,10 @@ import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.syndicate.deployment.annotations.LambdaUrlConfig;
 import com.syndicate.deployment.annotations.lambda.LambdaHandler;
-import com.syndicate.deployment.annotations.resources.DependsOn;
-import com.syndicate.deployment.model.ResourceType;
 import com.syndicate.deployment.model.lambda.url.AuthType;
 import com.syndicate.deployment.model.lambda.url.InvokeMode;
 import com.task05.model.ApiRequest;
 import com.task05.model.ApiResponse;
-import com.task05.model.Content;
 import com.task05.model.Event;
 import org.apache.http.HttpStatus;
 
@@ -82,7 +79,7 @@ public class ApiHandler implements RequestHandler<APIGatewayProxyRequestEvent, A
         }
     }
 
-    public String parseContent(Content content) {
+    public String parseContent(Map<String, String> content) {
         try {
             return objectMapper.writeValueAsString(content);
         } catch (IOException e) {

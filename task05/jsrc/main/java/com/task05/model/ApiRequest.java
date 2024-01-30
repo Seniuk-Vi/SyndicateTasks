@@ -1,13 +1,15 @@
 package com.task05.model;
 
+import java.util.Map;
+
 public class ApiRequest {
     private Long principalId;
-    private Content content;
+    private Map<String, String> content;
 
     public ApiRequest() {
     }
 
-    public ApiRequest(Long principalId, Content content) {
+    public ApiRequest(Long principalId, Map<String, String> content) {
         this.principalId = principalId;
         this.content = content;
     }
@@ -20,11 +22,11 @@ public class ApiRequest {
         this.principalId = principalId;
     }
 
-    public Content getContent() {
+    public Map<String, String> getContent() {
         return content;
     }
 
-    public void setContent(Content content) {
+    public void setContent(Map<String, String> content) {
         this.content = content;
     }
 }
