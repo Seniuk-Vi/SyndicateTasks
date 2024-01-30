@@ -79,12 +79,12 @@ public class ApiHandler implements RequestHandler<APIGatewayProxyRequestEvent, A
         }
     }
 
-    public String parseContent(Map<String, String> content) {
-        try {
-            return objectMapper.writeValueAsString(content);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public Map<String, AttributeValue> parseContent(Map<String, String> content) {
+        Map<String, AttributeValue> item = new HashMap<>();
+        for (Map.Entry<String, String> entry : content.entrySet()) {
+            item.put(entry.getKey(), new AttributeValue(entry.getValue()));
         }
+        return item;
     }
 
     public ApiResponse generateApiResponse(ApiRequest request) {
@@ -100,7 +100,7 @@ public class ApiHandler implements RequestHandler<APIGatewayProxyRequestEvent, A
         item.put("id", new AttributeValue(response.getEvent().getId()));
         item.put("principalId", new AttributeValue().withN(response.getEvent().getPrincipalId().toString()));
         item.put("createdAt", new AttributeValue().withS(response.getEvent().getCreatedAt()));
-        item.put("body", new AttributeValue().withS(parseContent(response.getEvent().getBody())));
+        item.put("body", new AttributeValue().withM(parseContent(response.getEvent().getBody())));
         return item;
     }
 }
