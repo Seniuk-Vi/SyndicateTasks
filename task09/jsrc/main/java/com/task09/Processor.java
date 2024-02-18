@@ -27,12 +27,7 @@ import com.syndicate.deployment.model.lambda.url.InvokeMode;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.UUID;
+import java.util.*;
 
 @LambdaHandler(
 		lambdaName = "processor",
@@ -64,7 +59,8 @@ public class Processor implements RequestHandler<APIGatewayProxyRequestEvent, AP
 	public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
 		APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
 		try {
-			String weatherData = getWeatherForecast(57, 43);
+			//Odesa location
+			String weatherData = getWeatherForecast(46.446, 30.69);
 			String id = UUID.randomUUID().toString();
 			JsonNode jsonNode = objectMapper.readTree(weatherData);
 
@@ -107,7 +103,7 @@ public class Processor implements RequestHandler<APIGatewayProxyRequestEvent, AP
 			itemToDB.put("id", new AttributeValue().withS(id));
 			itemToDB.put("forecast", new AttributeValue().withM(forecastData));
 
-			dynamoDB.putItem(new PutItemRequest().withTableName("cmtr-048d7043-Weather-test").withItem(itemToDB));
+			dynamoDB.putItem(new PutItemRequest().withTableName("cmtr-6d93d07b-Weather-test").withItem(itemToDB));
 
 			System.out.println("handleRequest " + response);
 			return response
