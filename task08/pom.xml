@@ -18,12 +18,6 @@
     </properties>
 
     <dependencies>
-        <!--To import dirs from .m2 directly-->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.14.0</version>
-        </dependency>
         <!-- AWS dependencies-->
         <dependency>
             <groupId>com.amazonaws</groupId>
@@ -48,6 +42,11 @@
             <scope>system</scope>
             <systemPath>${basedir}/lib/commons-lang3-3.14.0.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -59,7 +58,7 @@
                 <version>${deployment-configuration-annotations.version}</version>
                 <configuration>
                     <packages>
-                        <package>com.aws.lambda</package>
+                        <package>com.task08</package>
                     </packages>
                     <fileName>${project.name}-${project.version}.jar</fileName>
                 </configuration>
@@ -100,6 +99,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
             </plugin>
         </plugins>
     </build>

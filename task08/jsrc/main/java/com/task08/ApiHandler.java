@@ -11,7 +11,7 @@ import com.syndicate.deployment.model.ArtifactExtension;
 import com.syndicate.deployment.model.DeploymentRuntime;
 import com.syndicate.deployment.model.lambda.url.AuthType;
 import com.syndicate.deployment.model.lambda.url.InvokeMode;
-import com.task08.service.OpenMeteoService;
+import com.task08.openMeteoAPI.WeatherForecast;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -32,26 +32,28 @@ import java.io.IOException;
 		invokeMode = InvokeMode.BUFFERED
 )
 public class ApiHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-	private static final int SC_OK = 200;
-	private static final int SC_SERVER_ERROR = 500;
+
 	@Override
-	public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context)  {
+	public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context) {
 		APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
 		try {
-			StringUtils.isNotBlank("qw");
-			double latitude = 52.52;
-			double longitude = 13.41;
 
-			String weatherData = OpenMeteoService.getLatestWeatherForecast(latitude, longitude, "temperature_2m");
+			StringUtils.isNotBlank("qw");
+
+			//Odesa location
+			double latitude = 46.446;
+			double longitude = 30.69;
+
+			String weatherData = WeatherForecast.getWeatherForecast(latitude, longitude);
 
 			return response
-					.withStatusCode(SC_OK)
+					.withStatusCode(200)
 					.withBody(weatherData);
 		}
 		catch (IOException | NumberFormatException e) {
 			return response
-					.withStatusCode(SC_SERVER_ERROR)
-					.withBody("Internal server error: " + e.getMessage());
+					.withStatusCode(500)
+					.withBody("Error: " + e.getMessage());
 		}
-    }
+	}
 }
