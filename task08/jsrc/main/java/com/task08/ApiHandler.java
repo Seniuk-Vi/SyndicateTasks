@@ -37,6 +37,7 @@ public class ApiHandler implements RequestHandler<APIGatewayProxyRequestEvent, A
 	public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent request, Context context)  {
 		APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
 		try {
+			StringUtils.isNotBlank("qw");
 			double latitude = 52.52;
 			double longitude = 13.41;
 
