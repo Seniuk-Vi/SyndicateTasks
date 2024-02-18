@@ -18,6 +18,7 @@
     </properties>
 
     <dependencies>
+        <!--To import dirs from .m2 directly-->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>

@@ -12,6 +12,7 @@ import com.syndicate.deployment.model.DeploymentRuntime;
 import com.syndicate.deployment.model.lambda.url.AuthType;
 import com.syndicate.deployment.model.lambda.url.InvokeMode;
 import com.task08.service.OpenMeteoService;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
