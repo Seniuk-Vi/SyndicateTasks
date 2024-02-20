@@ -11,7 +11,10 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.task10.model.Reservation;
 import com.task10.model.Table;
+import com.task10.payload.response.GetReservationsResponse;
+import com.task10.payload.response.GetTablesResponse;
 import com.task10.payload.response.ReservationsResponse;
+import com.task10.payload.response.SaveReservationResponse;
 import com.task10.payload.response.TablesResponse;
 
 import java.io.IOException;
@@ -34,12 +37,12 @@ public class ReservationService {
         return amazonDynamoDB;
     }
 
-    public String saveReservation(String requestBody) throws IOException {
+    public SaveReservationResponse saveReservation(String requestBody) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Reservation reservation = objectMapper.readValue(requestBody, Reservation.class);
         System.out.println("Save reservation: " + reservation);
-        TablesResponse getTablesResponse = tableService.getTables(); // assuming tableService.getTables() returns a list of all tables
+        GetTablesResponse getTablesResponse = tableService.getTables(); // assuming tableService.getTables() returns a list of all tables
         Table table = getTablesResponse.getTables().stream()
                 .filter(t -> t.getNumber() == reservation.getTableNumber())
                 .findFirst()
@@ -59,7 +62,7 @@ public class ReservationService {
 
         System.out.println("Save reservation: " + reservation);
         dynamoDBMapper.save(reservation);
-        return reservation.getId();
+        return new SaveReservationResponse(reservation.getId());
     }
 
     private boolean hasOverlap(Reservation newReservation, Reservation existingReservation) {
@@ -69,10 +72,10 @@ public class ReservationService {
                 && newReservation.getSlotTimeEnd().compareTo(existingReservation.getSlotTimeEnd()) >= 0);
     }
 
-    public ReservationsResponse getReservations() {
+    public GetReservationsResponse getReservations() {
         ScanRequest scanRequest = new ScanRequest().withTableName(RESERVATION_DB_TABLE_NAME);
         ScanResult result = getAmazonDynamoDB().scan(scanRequest);
-        ReservationsResponse getReservationsResponse = new ReservationsResponse();
+        GetReservationsResponse getReservationsResponse = new GetReservationsResponse();
 
         for (Map<String, AttributeValue> item : result.getItems()) {
             Reservation reservation = new Reservation();

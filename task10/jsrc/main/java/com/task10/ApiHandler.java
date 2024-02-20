@@ -8,7 +8,10 @@ import com.google.gson.Gson;
 import com.syndicate.deployment.annotations.lambda.LambdaHandler;
 import com.task10.model.Table;
 import com.task10.payload.response.GenericResponseHandler;
+import com.task10.payload.response.GetReservationsResponse;
+import com.task10.payload.response.GetTablesResponse;
 import com.task10.payload.response.ReservationsResponse;
+import com.task10.payload.response.SaveReservationResponse;
 import com.task10.payload.response.TablesResponse;
 import com.task10.servise.CognitoService;
 import com.task10.servise.ReservationService;
@@ -63,7 +66,7 @@ public class ApiHandler implements RequestHandler<APIGatewayProxyRequestEvent, A
 	}
 	private APIGatewayProxyResponseEvent saveReservations(APIGatewayProxyRequestEvent request) {
 		try {
-			String response = reservationService.saveReservation(request.getBody());
+			SaveReservationResponse response = reservationService.saveReservation(request.getBody());
 			return GenericResponseHandler.successResponse(gson.toJson(response));
 		} catch (IllegalArgumentException | IOException e) {
 			return GenericResponseHandler.errorResponse(e.getMessage());
@@ -78,11 +81,11 @@ public class ApiHandler implements RequestHandler<APIGatewayProxyRequestEvent, A
 	}
 
 	private APIGatewayProxyResponseEvent getTables() {
-		TablesResponse response = tableService.getTables();
+		GetTablesResponse response = tableService.getTables();
 		return GenericResponseHandler.successResponse(gson.toJson(response));
 	}
 	private APIGatewayProxyResponseEvent getReservations() {
-		ReservationsResponse response = reservationService.getReservations();
+		GetReservationsResponse response = reservationService.getReservations();
 		return GenericResponseHandler.successResponse(gson.toJson(response));
 	}
 
